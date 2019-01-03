@@ -1,0 +1,92 @@
+{
+	"white_start": [
+		{
+			"is_rosette": false,
+			"current_piece": null
+		},
+		{
+			"is_rosette": false,
+			"current_piece": null
+		},
+		{
+			"is_rosette": false,
+			"current_piece": null
+		},
+		{
+			"is_rosette": true,
+			"current_piece": null
+		}
+	],
+	"black_start": [
+		{
+			"is_rosette": false,
+			"current_piece": null
+		},
+		{
+			"is_rosette": false,
+			"current_piece": null
+		},
+		{
+			"is_rosette": false,
+			"current_piece": null
+		},
+		{
+			"is_rosette": true,
+			"current_piece": null
+		}
+	],
+	"runway": [
+		{
+			"is_rosette": false,
+			"current_piece": null
+		},
+		{
+			"is_rosette": false,
+			"current_piece": null
+		},
+		{
+			"is_rosette": false,
+			"current_piece": null
+		},
+		{
+			"is_rosette": true,
+			"current_piece": null
+		},
+		{
+			"is_rosette": false,
+			"current_piece": null
+		},
+		{
+			"is_rosette": false,
+			"current_piece": null
+		},
+		{
+			"is_rosette": false,
+			"current_piece": null
+		},
+		{
+			"is_rosette": false,
+			"current_piece": null
+		}
+	],
+	"white_end": [
+		{
+			"is_rosette": false,
+			"current_piece": null
+		},
+		{
+			"is_rosette": true,
+			"current_piece": null
+		}
+	],
+	"black_end": [
+		{
+			"is_rosette": false,
+			"current_piece": null
+		},
+		{
+			"is_rosette": true,
+			"current_piece": null
+		}
+	]
+}

@@ -1,0 +1,120 @@
+{
+    "black_path": [
+        "5", 
+        "6", 
+        "7", 
+        "8", 
+        "9", 
+        "10", 
+        "11", 
+        "12", 
+        "13", 
+        "14", 
+        "15", 
+        "16", 
+        "19", 
+        "20"
+    ], 
+    "available_white": 6, 
+    "20": {
+        "is_rosette": true, 
+        "current_piece": null
+    }, 
+    "1": {
+        "is_rosette": false, 
+        "current_piece": null
+    }, 
+    "3": {
+        "is_rosette": false, 
+        "current_piece": null
+    }, 
+    "2": {
+        "is_rosette": false, 
+        "current_piece": "WHITE"
+    }, 
+    "5": {
+        "is_rosette": false, 
+        "current_piece": null
+    }, 
+    "white_path": [
+        "1", 
+        "2", 
+        "3", 
+        "4", 
+        "9", 
+        "10", 
+        "11", 
+        "12", 
+        "13", 
+        "14", 
+        "15", 
+        "16", 
+        "17", 
+        "18"
+    ], 
+    "7": {
+        "is_rosette": false, 
+        "current_piece": null
+    }, 
+    "6": {
+        "is_rosette": false, 
+        "current_piece": null
+    }, 
+    "9": {
+        "is_rosette": false, 
+        "current_piece": null
+    }, 
+    "8": {
+        "is_rosette": true, 
+        "current_piece": null
+    }, 
+    "roll": 3, 
+    "4": {
+        "is_rosette": true, 
+        "current_piece": null
+    }, 
+    "11": {
+        "is_rosette": false, 
+        "current_piece": null
+    }, 
+    "completed_white": 0, 
+    "completed_black": 0, 
+    "10": {
+        "is_rosette": false, 
+        "current_piece": null
+    }, 
+    "13": {
+        "is_rosette": false, 
+        "current_piece": null
+    }, 
+    "12": {
+        "is_rosette": true, 
+        "current_piece": null
+    }, 
+    "15": {
+        "is_rosette": false, 
+        "current_piece": null
+    }, 
+    "14": {
+        "is_rosette": false, 
+        "current_piece": null
+    }, 
+    "17": {
+        "is_rosette": false, 
+        "current_piece": null
+    }, 
+    "16": {
+        "is_rosette": false, 
+        "current_piece": null
+    }, 
+    "19": {
+        "is_rosette": false, 
+        "current_piece": null
+    }, 
+    "18": {
+        "is_rosette": true, 
+        "current_piece": null
+    }, 
+    "available_black": 7, 
+    "current_turn": "BLACK"
+}
