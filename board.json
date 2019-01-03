@@ -14,7 +14,8 @@
         "15", 
         "16", 
         "19", 
-        "20"
+        "20", 
+        "21"
     ], 
     "available_white": 6, 
     "20": {
@@ -31,7 +32,7 @@
     }, 
     "2": {
         "is_rosette": false, 
-        "current_piece": "WHITE"
+        "current_piece": null
     }, 
     "5": {
         "is_rosette": false, 
@@ -52,7 +53,8 @@
         "15", 
         "16", 
         "17", 
-        "18"
+        "18", 
+        "21"
     ], 
     "7": {
         "is_rosette": false, 
@@ -70,13 +72,13 @@
         "is_rosette": true, 
         "current_piece": null
     }, 
-    "roll": 2, 
+    "roll": 4, 
     "4": {
         "is_rosette": true, 
         "current_piece": null
     }, 
-    "completed_black": 0, 
-    "completed_white": 0, 
+    "completed_black": 2, 
+    "completed_white": 2, 
     "11": {
         "is_rosette": false, 
         "current_piece": null
@@ -107,7 +109,7 @@
     }, 
     "16": {
         "is_rosette": false, 
-        "current_piece": null
+        "current_piece": "WHITE"
     }, 
     "19": {
         "is_rosette": false, 
