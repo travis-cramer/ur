@@ -9,4 +9,4 @@ Run
 ```
 python play.py
 ```
-to start the game.
+to start the game!
