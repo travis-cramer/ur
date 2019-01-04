@@ -4,28 +4,31 @@ import random
 
 class Ur(object):
 
-	roll_map = {0: 1, 1: 1, 2: 1, 3: 2, 4: 2, 5: 2, 6: 3, 7: 4}
+	roll_map = {0: 1, 1: 1, 2: 1,
+				3: 2, 4: 2, 5: 2,
+				6: 3,
+				7: 4}
 
 	gameover = False  # when True, the game will end
-	board = None  # this will be loaded in init_board()
+	board = None  # this will be loaded in new_game() or load_game()
 
-	def init_board(self):
-		"""Resets the board to initial state, the beginning of a new game"""
-		with open('board_init.json') as board_init:
+	def new_game(self):
+		"""Resets the board to the initial state, the beginning of a new game"""
+		with open('new_game.json') as board_init:
 			board_data = json.load(board_init)
 		self.board = board_data
-		self.save_board()
+		self.save_game()
 
-	def save_board(self):
-		with open('board.json', 'w') as board_file:
+	def save_game(self):
+		with open('games/game_1.json', 'w') as board_file:
 			json.dump(self.board, board_file, indent=4)
 
-	def load_board(self):
-		with open('board.json') as board_file:
+	def load_game(self):
+		with open('games/game_1.json') as board_file:
 			self.board = json.load(board_file)
 
 	def play(self):
-		self.load_board()
+		self.load_game()
 		while not self.gameover:
 			if not self.board["roll"]:
 				self.roll()
@@ -37,10 +40,26 @@ class Ur(object):
 			else:
 				print("You rolled {} and have no available moves. Skipping your turn.".format(self.board["roll"]))
 				self.change_turn()
-			self.save_board()
+			self.save_game()
 
 	def roll(self):
 		self.board["roll"] = self.roll_map[random.randint(0, 7)]
+
+	def change_turn(self):
+		if self.board["current_turn"] == "WHITE":
+			self.board["current_turn"] = "BLACK"
+		else:
+			self.board["current_turn"] = "WHITE"
+		self.roll()
+
+	def can_move(self):
+		a_valid_move_exists = False
+		# try all possible moves and see if any of them are valid
+		for i in range(21):
+			move = str(i)
+			if self.validate_move(move, verbose=False):
+				a_valid_move_exists = True
+		return a_valid_move_exists
 
 	def get_move(self):
 		valid_move = False
@@ -63,44 +82,10 @@ class Ur(object):
 
 		return move
 
-	def change_turn(self):
-		if self.board["current_turn"] == "WHITE":
-			self.board["current_turn"] = "BLACK"
-		else:
-			self.board["current_turn"] = "WHITE"
-		self.roll()
-
-	def overtake_opposing_piece(self):
-		if self.board["current_turn"] == "WHITE":
-			print("Overtook a black piece!")
-			# overtake a black piece
-			self.board["available_black"] += 1
-		else:
-			# overtake a white piece
-			self.board["available_white"] += 1
-			print("Overtook a white piece!")
-
-	def complete_piece(self):
-		current_color = self.board["current_turn"].lower()
-		self.board["completed_{}".format(current_color)] += 1
-		if self.board["current_turn"] == "WHITE":
-			print("White completed a piece and scored a point!")
-		else:
-			print("Black completed a piece and scored a point!")
-
 	def get_new_position(self, move):
 		current_color = self.board["current_turn"].lower()
 		appropriate_path = self.board["{}_path".format(current_color)]  # either 'white_path' or 'black_path'
 		return str(appropriate_path[appropriate_path.index(move) + self.board["roll"]])
-
-	def can_move(self):
-		a_valid_move_exists = False
-		# try all possible moves and see if any of them are valid
-		for i in range(21):
-			move = str(i)
-			if self.validate_move(move, verbose=False):
-				a_valid_move_exists = True
-		return a_valid_move_exists
 
 	def validate_move(self, move, verbose=True):
 		if (int(move) < 0 or int(move) > 20):
@@ -146,12 +131,34 @@ class Ur(object):
 
 		return self.board[new_position]["is_rosette"]  # return True so player can roll again, False to change turn
 
+	def overtake_opposing_piece(self):
+		if self.board["current_turn"] == "WHITE":
+			print("Overtook a black piece!")
+			# overtake a black piece
+			self.board["available_black"] += 1
+		else:
+			# overtake a white piece
+			self.board["available_white"] += 1
+			print("Overtook a white piece!")
+
+	def complete_piece(self):
+		current_color = self.board["current_turn"].lower()
+		self.board["completed_{}".format(current_color)] += 1
+		if self.board["current_turn"] == "WHITE":
+			print("White completed a piece and scored a point!")
+		else:
+			print("Black completed a piece and scored a point!")
+
+		# check if the game is over
+		if self.board["completed_white"] == 7 or self.board["completed_black"] == 7:
+			self.gameover = True
+
 
 if __name__ == '__main__':
 	choice = raw_input("New game? (y/n)\n(this overwrites existing game if it exists): ")
 	if choice in ["y", "Y", "yes"]:
 		game = Ur()
-		game.init_board()
+		game.new_game()
 		game.play()
 	else:
 		game = Ur()
