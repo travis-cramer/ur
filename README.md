@@ -10,3 +10,10 @@ Run
 python play.py
 ```
 to start the game!
+
+For Developers
+--------------
+Below is a picture representing the index encoding of each square that we have chosen to proceed with. The bottom of the board is white's side and the bottom is black's.
+
+![alt text](https://www199.lunapic.com/editor/working/154657390376193862?2342992322)
+
