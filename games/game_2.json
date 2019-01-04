@@ -1,10 +1,10 @@
 {
-    "available_white": 4,
+    "available_white": 6,
     "available_black": 6,
     "completed_white": 0,
     "completed_black": 0,
-    "current_turn": "BLACK",
-    "roll": 3,
+    "current_turn": "WHITE",
+    "roll": 2,
     "white_path": [
         "0",
         "1",
@@ -43,7 +43,7 @@
     ],
     "1": {
         "is_rosette": false,
-        "current_piece": "WHITE"
+        "current_piece": null
     },
     "2": {
         "is_rosette": false,
@@ -51,7 +51,7 @@
     },
     "3": {
         "is_rosette": false,
-        "current_piece": "WHITE"
+        "current_piece": null
     },
     "4": {
         "is_rosette": true,
@@ -67,7 +67,7 @@
     },
     "7": {
         "is_rosette": false,
-        "current_piece": null
+        "current_piece": "BLACK"
     },
     "8": {
         "is_rosette": true,
@@ -79,7 +79,7 @@
     },
     "10": {
         "is_rosette": false,
-        "current_piece": "BLACK"
+        "current_piece": null
     },
     "11": {
         "is_rosette": false,

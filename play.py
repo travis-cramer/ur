@@ -23,9 +23,14 @@ class Ur(object):
 		with open('games/game_1.json', 'w') as board_file:
 			json.dump(self.board, board_file, indent=4)
 
-	def load_game(self):
-		with open('games/game_1.json') as board_file:
-			self.board = json.load(board_file)
+	def load_game(self, game_id=None):
+		if game_id:
+			with open('games/game_{}.json'.format(game_id)) as board_file:
+				self.board = json.load(board_file)
+		else:
+			# default to game_1
+			with open('games/game_1.json') as board_file:
+				self.board = json.load(board_file)
 
 	def play(self):
 		while not self.gameover:
@@ -66,9 +71,9 @@ class Ur(object):
 		# ask for moves until a valid one is received
 		while not valid_move:
 			if self.board["current_turn"] == "WHITE":
-				move = raw_input("Roll: {}\nWhite's move: ".format(self.board["roll"]))
+				move = input("Roll: {}\nWhite's move: ".format(self.board["roll"]))
 			else:
-				move = raw_input("Roll: {}\nBlack's move: ".format(self.board["roll"]))
+				move = input("Roll: {}\nBlack's move: ".format(self.board["roll"]))
 
 			if move in ["quit", "gameover", "game over"]:
 				self.gameover = True
@@ -154,7 +159,7 @@ class Ur(object):
 
 
 if __name__ == '__main__':
-	choice = raw_input("New game? (y/n)\n(this overwrites existing game if it exists): ")
+	choice = input("New game? (y/n)\n(this overwrites existing game if it exists): ")
 	if choice in ["y", "Y", "yes"]:
 		game = Ur()
 		game.new_game()
