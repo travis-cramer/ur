@@ -24,6 +24,21 @@ class Ur(object):
 		with open('board.json') as board_file:
 			self.board = json.load(board_file)
 
+	def play(self):
+		self.load_board()
+		while not self.gameover:
+			if not self.board["roll"]:
+				self.roll()
+			if self.can_move():
+				move = self.get_move()
+				landed_on_rosette = self.play_move(move)
+				if not landed_on_rosette:
+					self.change_turn()
+			else:
+				print("You rolled {} and have no available moves. Skipping your turn.".format(self.board["roll"]))
+				self.change_turn()
+			self.save_board()
+
 	def roll(self):
 		self.board["roll"] = self.roll_map[random.randint(0, 7)]
 
@@ -55,6 +70,38 @@ class Ur(object):
 			self.board["current_turn"] = "WHITE"
 		self.roll()
 
+	def overtake_opposing_piece(self):
+		if self.board["current_turn"] == "WHITE":
+			print("Overtook a black piece!")
+			# overtake a black piece
+			self.board["available_black"] += 1
+		else:
+			# overtake a white piece
+			self.board["available_white"] += 1
+			print("Overtook a white piece!")
+
+	def complete_piece(self):
+		current_color = self.board["current_turn"].lower()
+		self.board["completed_{}".format(current_color)] += 1
+		if self.board["current_turn"] == "WHITE":
+			print("White completed a piece and scored a point!")
+		else:
+			print("Black completed a piece and scored a point!")
+
+	def get_new_position(self, move):
+		current_color = self.board["current_turn"].lower()
+		appropriate_path = self.board["{}_path".format(current_color)]  # either 'white_path' or 'black_path'
+		return str(appropriate_path[appropriate_path.index(move) + self.board["roll"]])
+
+	def can_move(self):
+		a_valid_move_exists = False
+		# try all possible moves and see if any of them are valid
+		for i in range(21):
+			move = str(i)
+			if self.validate_move(move, verbose=False):
+				a_valid_move_exists = True
+		return a_valid_move_exists
+
 	def validate_move(self, move, verbose=True):
 		if (int(move) < 0 or int(move) > 20):
 			if verbose: print("Invalid move. You must choose a position between 0 and 20 (inclusive).")
@@ -75,39 +122,6 @@ class Ur(object):
 			if verbose: print("Invalid move. You would land on your own piece.")
 			return False
 		return True
-
-	def overtake_opposing_piece(self):
-		if self.board["current_turn"] == "WHITE":
-			print("Overtook a black piece!")
-			# overtake a black piece
-			self.board["available_black"] += 1
-		else:
-			# overtake a white piece
-			self.board["available_white"] += 1
-			print("Overtook a white piece!")
-
-	def get_new_position(self, move):
-		# either 'white_path' or 'black_path'
-		current_color = self.board["current_turn"].lower()
-		appropriate_path = self.board["{}_path".format(current_color)]
-		return str(appropriate_path[appropriate_path.index(move) + self.board["roll"]])
-
-	def can_move(self):
-		a_valid_move_exists = False
-		# try all possible moves and see if any of them are valid
-		for i in range(21):
-			move = str(i)
-			if self.validate_move(move, verbose=False):
-				a_valid_move_exists = True
-		return a_valid_move_exists
-
-	def complete_piece(self):
-		current_color = self.board["current_turn"].lower()
-		self.board["completed_{}".format(current_color)] += 1
-		if self.board["current_turn"] == "WHITE":
-			print("White completed a piece and scored a point!")
-		else:
-			print("Black completed a piece and scored a point!")
 
 	def play_move(self, move):
 		if move in ["quit", "gameover", "game over"]:
@@ -131,21 +145,6 @@ class Ur(object):
 			self.board[new_position]["current_piece"] = self.board["current_turn"]
 
 		return self.board[new_position]["is_rosette"]  # return True so player can roll again, False to change turn
-
-	def play(self):
-		self.load_board()
-		while not self.gameover:
-			if not self.board["roll"]:
-				self.roll()
-			if self.can_move():
-				move = self.get_move()
-				landed_on_rosette = self.play_move(move)
-				if not landed_on_rosette:
-					self.change_turn()
-			else:
-				print("You rolled {} and have no available moves. Skipping your turn.".format(self.board["roll"]))
-				self.change_turn()
-			self.save_board()
 
 
 if __name__ == '__main__':
