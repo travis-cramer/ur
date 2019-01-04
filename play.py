@@ -28,7 +28,6 @@ class Ur(object):
 			self.board = json.load(board_file)
 
 	def play(self):
-		self.load_game()
 		while not self.gameover:
 			if not self.board["roll"]:
 				self.roll()
@@ -162,4 +161,5 @@ if __name__ == '__main__':
 		game.play()
 	else:
 		game = Ur()
+		game.load_game()
 		game.play()

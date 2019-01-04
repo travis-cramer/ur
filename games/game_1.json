@@ -17,22 +17,22 @@
         "20", 
         "21"
     ], 
-    "available_white": 4, 
+    "available_white": 5, 
     "20": {
         "is_rosette": true, 
         "current_piece": null
     }, 
     "1": {
         "is_rosette": false, 
-        "current_piece": null
+        "current_piece": "WHITE"
     }, 
     "3": {
         "is_rosette": false, 
-        "current_piece": "WHITE"
+        "current_piece": null
     }, 
     "2": {
         "is_rosette": false, 
-        "current_piece": null
+        "current_piece": "WHITE"
     }, 
     "5": {
         "is_rosette": false, 
@@ -58,7 +58,7 @@
     ], 
     "7": {
         "is_rosette": false, 
-        "current_piece": "BLACK"
+        "current_piece": null
     }, 
     "6": {
         "is_rosette": false, 
@@ -75,14 +75,14 @@
     "roll": 2, 
     "4": {
         "is_rosette": true, 
-        "current_piece": "WHITE"
+        "current_piece": null
     }, 
-    "completed_black": 0, 
-    "completed_white": 0, 
     "11": {
         "is_rosette": false, 
         "current_piece": null
     }, 
+    "completed_white": 0, 
+    "completed_black": 0, 
     "10": {
         "is_rosette": false, 
         "current_piece": null
@@ -109,7 +109,7 @@
     }, 
     "16": {
         "is_rosette": false, 
-        "current_piece": "WHITE"
+        "current_piece": null
     }, 
     "19": {
         "is_rosette": false, 
@@ -119,6 +119,6 @@
         "is_rosette": true, 
         "current_piece": null
     }, 
-    "available_black": 4, 
-    "current_turn": "BLACK"
+    "available_black": 5, 
+    "current_turn": "WHITE"
 }
