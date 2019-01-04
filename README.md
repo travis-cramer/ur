@@ -49,13 +49,17 @@ virtualenv -p python3 env
 ```
 git clone https://github.com/pyracmon/20squares
 ```
-8. Install all requirements listed in "requirements.txt" (with your virtualenv activated):
+8. Move into the cloned repo:
+```
+cd 20squares/
+```
+9. Install all requirements listed in "requirements.txt" (with your virtualenv activated):
 ```
 pip install -r requirements.txt
 ```
-9. Start the server:
+10. Start the server:
 ```
 FLASK_APP=server.py flask run
 ```
-10. Go to the url that the server is running on (it will list this in the terminal output).
-11. Enjoy :)
+11. Go to the url that the server is running on (this will be listed in the terminal output).
+12. Enjoy :)
