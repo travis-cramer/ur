@@ -1,29 +1,9 @@
 The Royal Game of Ur
 --------------------
 
-The Roayal Game of Ur is an ancient board game. This is a repo (in progress) with the server and client code for running an in-broswer version of this game.
+The Roayal Game of Ur is an ancient board game. This repo contains the server and client code for running an in-broswer version of it.
 
-Currently, it only runs locally as a python script from your command line. The only dependency is Python 2.
-
-Run
-```
-python play.py
-```
-to start the game!
-
-How to move:
-To move a piece, enter the board index (see Board Indexing below) where the piece you want to move is located. For example, if you want to move a new piece from off the board onto the board, enter "0" (without the quotes). If you are playing as black, and you want to move your piece that's sitting on square 8, enter "8".
-
-Unfortunately, the board is not visible in the terminal application. You must use your mind to visualize and remember where all the pieces are as you play. It is primarily a debugging tool for now to ensure we have the correct rules and logic in place.
-
-NOTE: if you want to begin a game from a particular game state / position (very useful for exploring edge cases), edit the game_1.json file in the games/ directory. Then, choose not to start a new game when you re-launch the program.
-
-Board Indexing
---------------
-Below is a picture representing the index encoding of each square that we have chosen to use. The bottom of the board is white's side and the top is black's. There are also indexes "0" and "21" (not shown here) which represent the two offboard positions, with "0" being where pieces begin and "21" being where pieces finish.
-
-![alt text](/ur-board-indexes.gif?raw=true)
-
+See the installation instructions below to run your own server of the game. Or, you can immediately demo the game hosted here: http://35.235.64.29:5000
 
 How to Install
 --------------
@@ -63,3 +43,9 @@ python server.py
 ```
 11. Go to the url that the server is running on (this will be listed in the terminal output).
 12. Play :)
+
+Board Indexing
+--------------
+Below is a picture representing the index encoding of each square that we have chosen to use. The bottom of the board is white's side and the top is black's. There are also indexes "0" and "21" (not shown here) which represent the two offboard positions, with "0" being where pieces begin and "21" being where pieces finish.
+
+![alt text](/ur-board-indexes.gif?raw=true)

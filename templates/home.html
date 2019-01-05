@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Ur Games List</title>
+</head>
+<body>
+	<form action="/new_game/">
+		<input type="submit" value="New Game">
+	</form>
+
+	{% for game_id in game_ids %}
+		<p><a href="/board?game_id={{game_id}}">game {{game_id}}</a></p>
+	{% endfor %}
+
+</body>
+</html>

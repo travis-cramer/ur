@@ -1,3 +1,4 @@
+import glob
 import json
 import random
 
@@ -12,13 +13,32 @@ class Ur(object):
 	gameover = False  # when True, the game will end
 	board = None  # this will be loaded in new_game() or load_game()
 
-	def new_game(self):
+	def new_game(self, game_id=None):
 		"""Resets the board to the initial state, the beginning of a new game"""
 		with open('new_game.json') as board_init:
 			board_data = json.load(board_init)
 		self.board = board_data
 		self.roll()
-		self.save_game()
+		if game_id:
+			self.save_game(game_id)
+		else:
+			self.save_game()
+
+	def get_all_game_ids(self):
+		all_games = glob.glob("games/*.json")  # get all games in games/ directory
+		game_ids = []
+		for game in all_games:
+			game_id = game.split('/')[-1].split('.')[0].split('_')[-1]
+			game_ids.append(game_id)
+		return game_ids
+
+	def get_new_game_id(self):
+		all_game_ids = self.get_all_game_ids()
+		if all_game_ids:
+			new_game_id = str(int(max(all_game_ids)) + 1)  # increment the current max id
+		else:
+			new_game_id = "1"  # initial game id
+		return new_game_id
 
 	def save_game(self, game_id=None):
 		if game_id:

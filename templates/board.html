@@ -7,6 +7,7 @@
 	<style type="text/css">
 		body {
 			font-family: sans-serif;
+			font-size: 20px;
 		}
 
 		div {
@@ -46,7 +47,7 @@
 			var i;
 			for (i = 1; i < 21; i++) { 
 				var myDiv = document.getElementById(i.toString());
-				myDiv.innerHTML = i.toString();
+				myDiv.setAttribute("onclick", "moveAndUpdateBoard(" + myDiv.id + ")")
 			}
 		}
 
@@ -91,7 +92,7 @@
 					myDiv.style.color = "black";
 				}
 				if (myJSON[i.toString()]["is_rosette"]) {
-					myDiv.innerHTML = "* * " + myDiv.id + " * *";
+					myDiv.innerHTML = "* * * *";
 				}
 			}
 			// populate misc. info
@@ -104,11 +105,6 @@
 			if (myJSON["message"]) {
 				document.getElementById("message").innerHTML = myJSON["message"];
 			}
-		}
-
-		function handleMove() {
-			var move = document.getElementById("move").value;
-			moveAndUpdateBoard(move);
 		}
 
 		function moveAndUpdateBoard(move) {
@@ -125,6 +121,10 @@
 			};
 			xmlhttp.open("GET", url, true);
 			xmlhttp.send();
+		}
+
+		function newPiece() {
+			moveAndUpdateBoard("0")
 		}
 
 		function resetGame() {
@@ -154,51 +154,42 @@
 		<input type="submit" value="Reset Game">
 	</form>
 
-	<p id="message"></p>
-
-	<div id="board">
-		<div id="8" class="square"><p></p><br><br><p class="current_piece"></p></div>
-		<div id="7" class="square"><p></p><br><br><p class="current_piece"></p></div>
-		<div id="6" class="square"><p></p><br><br><p class="current_piece"></p></div>
-		<div id="5" class="square"><p></p><br><br><p class="current_piece"></p></div>
-		<div id="black-finish" class="square"></div>
-		<div id="black-finish" class="square"></div>
-		<div id="20" class="square"><p></p><br><br><p class="current_piece"></p></div>
-		<div id="19" class="square"><p></p><br><br><p class="current_piece"></p></div>
-		<div id="9" class="square"><p></p><br><br><p class="current_piece"></p></div>
-		<div id="10" class="square"><p></p><br><br><p class="current_piece"></p></div>
-		<div id="11" class="square"><p></p><br><br><p class="current_piece"></p></div>
-		<div id="12" class="square"><p></p><br><br><p class="current_piece"></p></div>
-		<div id="13" class="square"><p></p><br><br><p class="current_piece"></p></div>
-		<div id="14" class="square"><p></p><br><br><p class="current_piece"></p></div>
-		<div id="15" class="square"><p></p><br><br><p class="current_piece"></p></div>
-		<div id="16" class="square"><p></p><br><br><p class="current_piece"></p></div>
-		<div id="4" class="square"><p></p><br><br><p class="current_piece"></p></div>
-		<div id="3" class="square"><p></p><br><br><p class="current_piece"></p></div>
-		<div id="2" class="square"><p></p><br><br><p class="current_piece"></p></div>
-		<div id="1" class="square"><p></p><br><br><p class="current_piece"></p></div>
-		<div id="white-finish" class="square"></div>
-		<div id="white-finish" class="square"></div>
-		<div id="18" class="square"><p></p><br><br><p class="current_piece"></p></div>
-		<div id="17" class="square"><p></p><br><br><p class="current_piece"></p></div>
-	</div>
-	<p id="available-white"></p>
-	<p id="available-black"></p>
-
 	<p id="current-turn"></p>
 	<p id="roll"></p>
 
-	<form action="javascript:handleMove()" autocomplete="off">
-		<br><br>
-		<input id="move" type="text">
-		<br><br>
-		<input id="btn" type="submit" value="Move">
-	</form>
+	<p id="message"></p>
 
-	<p>
-		Type in the index of the square that contains the piece you want to move. "0" (without quotes) signifies a 
-		piece you have off the board.
-	</p>
+	<div id="board">
+		<div id="8" class="square"></div>
+		<div id="7" class="square"></div>
+		<div id="6" class="square"></div>
+		<div id="5" class="square"></div>
+		<div id="black-finish" class="square"></div>
+		<div id="black-finish" class="square"></div>
+		<div id="20" class="square"></div>
+		<div id="19" class="square"></div>
+		<div id="9" class="square"></div>
+		<div id="10" class="square"></div>
+		<div id="11" class="square"></div>
+		<div id="12" class="square"></div>
+		<div id="13" class="square"></div>
+		<div id="14" class="square"></div>
+		<div id="15" class="square"></div>
+		<div id="16" class="square"></div>
+		<div id="4" class="square"></div>
+		<div id="3" class="square"></div>
+		<div id="2" class="square"></div>
+		<div id="1" class="square"></div>
+		<div id="white-finish" class="square"></div>
+		<div id="white-finish" class="square"></div>
+		<div id="18" class="square"></div>
+		<div id="17" class="square"></div>
+	</div>
+	<br>
+	<input type="button" value="New Piece" onClick="newPiece()" />
+
+	<p id="available-white"></p>
+	<p id="available-black"></p>
 
 </body>
 </html>

@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, jsonify
+from flask import Flask, request, render_template, jsonify, redirect, url_for
 
 from play import Ur
 
@@ -8,12 +8,21 @@ app = Flask(__name__, static_folder='')
 
 @app.route("/")
 def games():
-	return "<a href='/board?game_id=1'>game 1</a><p></p><a href='/board?game_id=2'>game 2<a>"
+	game = Ur()
+	all_game_ids = game.get_all_game_ids()
+	all_game_ids.sort()
+	return render_template('home.html', game_ids=all_game_ids)
+
+@app.route("/new_game/")
+def new_game():
+	game = Ur()
+	game.new_game(game.get_new_game_id())
+	return redirect(url_for('games'))
 
 @app.route("/board/")
 def board():
 	game_id = request.args.get('game_id')
-	return render_template('index.html', game_id=game_id)
+	return render_template('board.html', game_id=game_id)
 
 @app.route("/games/<game_id>")
 def game(game_id):
