@@ -17,11 +17,16 @@ class Ur(object):
 		with open('new_game.json') as board_init:
 			board_data = json.load(board_init)
 		self.board = board_data
+		self.roll()
 		self.save_game()
 
-	def save_game(self):
-		with open('games/game_1.json', 'w') as board_file:
-			json.dump(self.board, board_file, indent=4)
+	def save_game(self, game_id=None):
+		if game_id:
+			with open('games/game_{}.json'.format(game_id), 'w') as board_file:
+				json.dump(self.board, board_file, indent=4)
+		else:
+			with open('games/game_1.json', 'w') as board_file:
+				json.dump(self.board, board_file, indent=4)
 
 	def load_game(self, game_id=None):
 		if game_id:
@@ -31,6 +36,10 @@ class Ur(object):
 			# default to game_1
 			with open('games/game_1.json') as board_file:
 				self.board = json.load(board_file)
+
+	def reset_game(self, game_id):
+		self.new_game()
+		self.save_game(game_id=game_id)
 
 	def play(self):
 		while not self.gameover:
@@ -53,8 +62,6 @@ class Ur(object):
 			if not roll_again:
 				self.change_turn()
 			self.save_game()
-		else:
-			print("Not a valid move for some reason. Try again.")
 
 	def roll(self):
 		self.board["roll"] = self.roll_map[random.randint(0, 7)]
