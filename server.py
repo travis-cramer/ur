@@ -16,7 +16,6 @@ def test():
 @app.route("/board/")
 def board():
 	game_id = request.args.get('game_id')
-	print(game_id)
 	return render_template('index.html', game_id=game_id)
 
 @app.route("/games/<game_id>")
@@ -25,7 +24,7 @@ def game(game_id):
 	game.load_game(game_id)
 	return jsonify(game.board)
 
-@app.route("/games/<game_id>/move/")
+@app.route("/games/<game_id>/actions/move/")
 def move(game_id):
 	game = Ur()
 	game.load_game(game_id)

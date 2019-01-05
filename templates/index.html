@@ -34,34 +34,39 @@
 <body>
 	<div id="game-id" style="height: 0px;">{{game_id}}</div> <!-- .js will grab this value -->
 
-	<div>
-	    <div id="8">1</div>
-	    <div id="7">2</div>
-	    <div id="6">3</div>
-	    <div id="5">4</div>
-	    <div id="black-finish" style="background: black;">5</div>
-	    <div id="black-finish" style="background: black;">6</div>
-	    <div id="20">7</div>
-	    <div id="19">8</div>
-	    <div id="9">9</div>
-	    <div id="10">10</div>
-	    <div id="11">11</div>
-	    <div id="12">12</div>
-	    <div id="13">13</div>
-	    <div id="14">14</div>
-	    <div id="15">15</div>
-	    <div id="16">16</div>
-	    <div id="4">17</div>
-	    <div id="3">18</div>
-	    <div id="2">19</div>
-	    <div id="1">20</div>
-	    <div id="white-finish" style="background: red; color: red;">21</div>
-	    <div id="white-finish" style="background: red; color: red;">22</div>
-	    <div id="18">23</div>
-	    <div id="17">24</div>
+	<div id="board">
+	    <div id="8" class="square">1</div>
+	    <div id="7" class="square">2</div>
+	    <div id="6" class="square">3</div>
+	    <div id="5" class="square">4</div>
+	    <div id="black-finish" class="square" style="background: black;">5</div>
+	    <div id="black-finish" class="square" style="background: black;">6</div>
+	    <div id="20" class="square">7</div>
+	    <div id="19" class="square">8</div>
+	    <div id="9" class="square">9</div>
+	    <div id="10" class="square">10</div>
+	    <div id="11" class="square">11</div>
+	    <div id="12" class="square">12</div>
+	    <div id="13" class="square">13</div>
+	    <div id="14" class="square">14</div>
+	    <div id="15" class="square">15</div>
+	    <div id="16" class="square">16</div>
+	    <div id="4" class="square">17</div>
+	    <div id="3" class="square">18</div>
+	    <div id="2" class="square">19</div>
+	    <div id="1" class="square">20</div>
+	    <div id="white-finish" class="square" style="background: red; color: red;">21</div>
+	    <div id="white-finish" class="square" style="background: red; color: red;">22</div>
+	    <div id="18" class="square">23</div>
+	    <div id="17" class="square">24</div>
 	</div>
 
-	<form action="/games/{}/move/" autocomplete="off">
+	<p>
+		Type in the index of the square that contains the piece you want to move. "0" (without quotes) signifies a 
+		piece you have off the board.
+	</p>
+
+	<form action="/games/1/actions/move/" autocomplete="off">
 		<br><br>
 		<input type="text" name="move">
 		<br><br>
