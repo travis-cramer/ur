@@ -2,6 +2,7 @@ from flask import Flask, request, render_template, jsonify
 
 from play import Ur
 
+
 app = Flask(__name__, static_folder='')
 
 
@@ -32,3 +33,7 @@ def reset(game_id):
 	game = Ur()
 	game.reset_game(game_id)
 	return jsonify(game.board)
+
+
+if __name__ == "__main__":
+	app.run(host="0.0.0.0", debug=False)
