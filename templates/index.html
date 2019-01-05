@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<title>The Royal Game of Ur: game_{{game_id}}</title>
+
+	<style type="text/css">
+		div {
+		    width: 800px;
+		    height: 300px;
+		}
+
+		div div {
+		    width: 100px;
+		    height: 100px;
+		    outline: 1px solid;
+		    float: left;
+		}
+	</style>
+	<script type="text/javascript">
+		function populateBoard() {
+			var gameId = document.getElementById("game-id").innerHTML;
+			var i;
+			for (i = 1; i < 21; i++) { 
+				var myDiv = document.getElementById(i.toString());
+				myDiv.innerHTML = i.toString();
+			}
+        }
+        window.onload = populateBoard;
+	</script>
+
+</head>
+
+<body>
+	<div id="game-id" style="height: 0px;">{{game_id}}</div> <!-- .js will grab this value -->
+
+	<div>
+	    <div id="8">1</div>
+	    <div id="7">2</div>
+	    <div id="6">3</div>
+	    <div id="5">4</div>
+	    <div id="black-finish" style="background: black;">5</div>
+	    <div id="black-finish" style="background: black;">6</div>
+	    <div id="20">7</div>
+	    <div id="19">8</div>
+	    <div id="9">9</div>
+	    <div id="10">10</div>
+	    <div id="11">11</div>
+	    <div id="12">12</div>
+	    <div id="13">13</div>
+	    <div id="14">14</div>
+	    <div id="15">15</div>
+	    <div id="16">16</div>
+	    <div id="4">17</div>
+	    <div id="3">18</div>
+	    <div id="2">19</div>
+	    <div id="1">20</div>
+	    <div id="white-finish" style="background: red; color: red;">21</div>
+	    <div id="white-finish" style="background: red; color: red;">22</div>
+	    <div id="18">23</div>
+	    <div id="17">24</div>
+	</div>
+
+	<form action="/games/{}/move/" autocomplete="off">
+		<br><br>
+		<input type="text" name="move">
+		<br><br>
+		<input id="btn" type="submit" value="Move">
+	</form>
+
+</body>
+</html>

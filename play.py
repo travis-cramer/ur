@@ -38,13 +38,23 @@ class Ur(object):
 				self.roll()
 			if self.can_move():
 				move = self.get_move()
-				landed_on_rosette = self.play_move(move)
+				landed_on_rosette = self.make_move(move)
 				if not landed_on_rosette:
 					self.change_turn()
 			else:
 				print("You rolled {} and have no available moves. Skipping your turn.".format(self.board["roll"]))
 				self.change_turn()
 			self.save_game()
+
+	def play_move(self, move):
+		valid_move = self.validate_move(move)
+		if valid_move:
+			roll_again = self.make_move(move)
+			if not roll_again:
+				self.change_turn()
+			self.save_game()
+		else:
+			print("Not a valid move for some reason. Try again.")
 
 	def roll(self):
 		self.board["roll"] = self.roll_map[random.randint(0, 7)]
@@ -112,7 +122,7 @@ class Ur(object):
 			return False
 		return True
 
-	def play_move(self, move):
+	def make_move(self, move):
 		if move in ["quit", "gameover", "game over"]:
 			self.gameover = True
 			return True
