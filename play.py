@@ -50,6 +50,7 @@ class Ur(object):
 				landed_on_rosette = self.make_move(move)
 				if not landed_on_rosette:
 					self.change_turn()
+				self.roll()
 			else:
 				print("You rolled {} and have no available moves. Skipping your turn.".format(self.board["roll"]))
 				self.change_turn()
@@ -61,6 +62,7 @@ class Ur(object):
 			roll_again = self.make_move(move)
 			if not roll_again:
 				self.change_turn()
+			self.roll()
 			self.save_game()
 
 	def roll(self):
@@ -71,7 +73,6 @@ class Ur(object):
 			self.board["current_turn"] = "BLACK"
 		else:
 			self.board["current_turn"] = "WHITE"
-		self.roll()
 
 	def can_move(self):
 		a_valid_move_exists = False

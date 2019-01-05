@@ -59,7 +59,7 @@ pip install -r requirements.txt
 ```
 10. Start the server:
 ```
-FLASK_APP=server.py flask run
+python server.py
 ```
 11. Go to the url that the server is running on (this will be listed in the terminal output).
-12. Enjoy :)
+12. Play :)
