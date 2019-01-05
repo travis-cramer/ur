@@ -1,5 +1,6 @@
 import glob
 import json
+import os
 import random
 
 
@@ -24,25 +25,11 @@ class Ur(object):
 		else:
 			self.save_game()
 
-	def get_all_game_ids(self):
-		all_games = glob.glob("games/*.json")  # get all games in games/ directory
-		game_ids = []
-		for game in all_games:
-			game_id = game.split('/')[-1].split('.')[0].split('_')[-1]
-			game_ids.append(game_id)
-		return game_ids
-
-	def get_new_game_id(self):
-		all_game_ids = self.get_all_game_ids()
-		if all_game_ids:
-			new_game_id = str(int(max(all_game_ids)) + 1)  # increment the current max id
-		else:
-			new_game_id = "1"  # initial game id
-		return new_game_id
-
 	def save_game(self, game_id=None):
+		filename = 'games/game_{}.json'.format(game_id)
+		os.makedirs(os.path.dirname(filename), exist_ok=True)
 		if game_id:
-			with open('games/game_{}.json'.format(game_id), 'w') as board_file:
+			with open(filename, 'w') as board_file:
 				json.dump(self.board, board_file, indent=4)
 		else:
 			with open('games/game_1.json', 'w') as board_file:
@@ -60,6 +47,22 @@ class Ur(object):
 	def reset_game(self, game_id):
 		self.new_game()
 		self.save_game(game_id=game_id)
+
+	def get_all_game_ids(self):
+		all_games = glob.glob("games/*.json")  # get all games in games/ directory
+		game_ids = []
+		for game in all_games:
+			game_id = game.split('/')[-1].split('.')[0].split('_')[-1]
+			game_ids.append(game_id)
+		return game_ids
+
+	def get_new_game_id(self):
+		all_game_ids = self.get_all_game_ids()
+		if all_game_ids:
+			new_game_id = str(int(max(all_game_ids)) + 1)  # increment the current max id
+		else:
+			new_game_id = "1"  # initial game id
+		return new_game_id
 
 	def play(self):
 		while not self.gameover:
