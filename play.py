@@ -23,9 +23,14 @@ class Ur(object):
 		with open('games/game_1.json', 'w') as board_file:
 			json.dump(self.board, board_file, indent=4)
 
-	def load_game(self):
-		with open('games/game_1.json') as board_file:
-			self.board = json.load(board_file)
+	def load_game(self, game_id=None):
+		if game_id:
+			with open('games/game_{}.json'.format(game_id)) as board_file:
+				self.board = json.load(board_file)
+		else:
+			# default to game_1
+			with open('games/game_1.json') as board_file:
+				self.board = json.load(board_file)
 
 	def play(self):
 		while not self.gameover:
@@ -33,13 +38,23 @@ class Ur(object):
 				self.roll()
 			if self.can_move():
 				move = self.get_move()
-				landed_on_rosette = self.play_move(move)
+				landed_on_rosette = self.make_move(move)
 				if not landed_on_rosette:
 					self.change_turn()
 			else:
 				print("You rolled {} and have no available moves. Skipping your turn.".format(self.board["roll"]))
 				self.change_turn()
 			self.save_game()
+
+	def play_move(self, move):
+		valid_move = self.validate_move(move)
+		if valid_move:
+			roll_again = self.make_move(move)
+			if not roll_again:
+				self.change_turn()
+			self.save_game()
+		else:
+			print("Not a valid move for some reason. Try again.")
 
 	def roll(self):
 		self.board["roll"] = self.roll_map[random.randint(0, 7)]
@@ -66,9 +81,9 @@ class Ur(object):
 		# ask for moves until a valid one is received
 		while not valid_move:
 			if self.board["current_turn"] == "WHITE":
-				move = raw_input("Roll: {}\nWhite's move: ".format(self.board["roll"]))
+				move = input("Roll: {}\nWhite's move: ".format(self.board["roll"]))
 			else:
-				move = raw_input("Roll: {}\nBlack's move: ".format(self.board["roll"]))
+				move = input("Roll: {}\nBlack's move: ".format(self.board["roll"]))
 
 			if move in ["quit", "gameover", "game over"]:
 				self.gameover = True
@@ -107,7 +122,7 @@ class Ur(object):
 			return False
 		return True
 
-	def play_move(self, move):
+	def make_move(self, move):
 		if move in ["quit", "gameover", "game over"]:
 			self.gameover = True
 			return True
@@ -154,7 +169,7 @@ class Ur(object):
 
 
 if __name__ == '__main__':
-	choice = raw_input("New game? (y/n)\n(this overwrites existing game if it exists): ")
+	choice = input("New game? (y/n)\n(this overwrites existing game if it exists): ")
 	if choice in ["y", "Y", "yes"]:
 		game = Ur()
 		game.new_game()
