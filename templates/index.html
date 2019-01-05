@@ -2,76 +2,203 @@
 <html>
 <head>
 
-	<title>The Royal Game of Ur: game_{{game_id}}</title>
+	<title>The Royal Game of Ur</title>
 
 	<style type="text/css">
+		body {
+			font-family: sans-serif;
+		}
+
 		div {
-		    width: 800px;
-		    height: 300px;
+			width: 800px;
+			height: 300px;
+		}
+
+		#black-finish {
+			background: black;
+			color: white;
+		}
+
+		#white-finish {
+			background: red;
+			color: white;
 		}
 
 		div div {
-		    width: 100px;
-		    height: 100px;
-		    outline: 1px solid;
-		    float: left;
+			width: 100px;
+			height: 100px;
+			outline: 1px solid;
+			float: left;
 		}
 	</style>
+
 	<script type="text/javascript">
-		function populateBoard() {
-			var gameId = document.getElementById("game-id").innerHTML;
+
+		window.onload = labelAndUpdateBoard;
+
+		function labelAndUpdateBoard() {
+			labelBoard();
+			getAndUpdateBoard();
+		}
+
+		function labelBoard() {
+			// label each space with its appropriate index
 			var i;
 			for (i = 1; i < 21; i++) { 
 				var myDiv = document.getElementById(i.toString());
 				myDiv.innerHTML = i.toString();
 			}
-        }
-        window.onload = populateBoard;
+		}
+
+		function getAndUpdateBoard() {
+			// request the backend for the current game state
+			var gameId = document.getElementById("game-id").innerHTML;
+			var xmlhttp = new XMLHttpRequest();
+			var url = "/games/" + gameId;
+
+			xmlhttp.onreadystatechange = function() {
+				if (this.status == 200) {
+					var myJSON = JSON.parse(this.responseText);
+					updateBoard(myJSON);
+				}
+			};
+
+			// update once initially and then continuously thereafter
+			xmlhttp.open("GET", url, true);
+			xmlhttp.send();
+			setInterval( function() {
+				xmlhttp.open("GET", url, true);
+				xmlhttp.send();
+				// continuously poll backend for updates every X ms
+			}, 3000)
+			
+			
+		}
+
+		function updateBoard(myJSON) {
+			for (var i = 1; i < 21; i++) { 
+				var myDiv = document.getElementById(i.toString());
+				if (myJSON[i.toString()]["current_piece"] == "WHITE") {
+					myDiv.style.background = "lightgray";
+					myDiv.style.color = "black";
+				}
+				if (myJSON[i.toString()]["current_piece"] == "BLACK") {
+					myDiv.style.background = "gray";
+					myDiv.style.color = "white";  // so that we can see the text
+				}
+				if (myJSON[i.toString()]["current_piece"] == null) {
+					myDiv.style.background = "white";
+					myDiv.style.color = "black";
+				}
+				if (myJSON[i.toString()]["is_rosette"]) {
+					myDiv.innerHTML = "* * " + myDiv.id + " * *";
+				}
+			}
+			// populate misc. info
+			document.getElementById("available-white").innerHTML = "Available white pieces: " + myJSON["available_white"];
+			document.getElementById("available-black").innerHTML = "Available black pieces: " + myJSON["available_black"];
+			document.getElementById("white-finish").innerHTML = myJSON["completed_white"];
+			document.getElementById("black-finish").innerHTML = myJSON["completed_black"];
+			document.getElementById("current-turn").innerHTML = myJSON["current_turn"] + "'s Turn";
+			document.getElementById("roll").innerHTML = "Roll: " + myJSON["roll"];
+			if (myJSON["message"]) {
+				document.getElementById("message").innerHTML = myJSON["message"];
+			}
+		}
+
+		function handleMove() {
+			var move = document.getElementById("move").value;
+			moveAndUpdateBoard(move);
+		}
+
+		function moveAndUpdateBoard(move) {
+			// request the backend for the current game state
+			var gameId = document.getElementById("game-id").innerHTML;
+			var xmlhttp = new XMLHttpRequest();
+			var url = "/games/" + gameId + "/actions/move/?move=" + move;
+
+			xmlhttp.onreadystatechange = function() {
+				if (this.status == 200) {
+					var myJSON = JSON.parse(this.responseText);
+					updateBoard(myJSON);
+				}
+			};
+			xmlhttp.open("GET", url, true);
+			xmlhttp.send();
+		}
+
+		function resetGame() {
+			// request the backend for the current game state
+			var gameId = document.getElementById("game-id").innerHTML;
+			var xmlhttp = new XMLHttpRequest();
+			var url = "/games/" + gameId + "/actions/reset/";
+
+			xmlhttp.onreadystatechange = function() {
+				if (this.status == 200) {
+					var myJSON = JSON.parse(this.responseText);
+					updateBoard(myJSON);
+				}
+			};
+			xmlhttp.open("GET", url, true);
+			xmlhttp.send();
+		}
+
 	</script>
 
 </head>
 
 <body>
-	<div id="game-id" style="height: 0px;">{{game_id}}</div> <!-- .js will grab this value -->
+	<div id="game-id" style="height: 0px; visibility: hidden;">{{game_id}}</div> <!-- .js will grab this value -->
+
+	<form action="javascript:resetGame()">
+		<input type="submit" value="Reset Game">
+	</form>
+
+	<p id="message"></p>
 
 	<div id="board">
-	    <div id="8" class="square">1</div>
-	    <div id="7" class="square">2</div>
-	    <div id="6" class="square">3</div>
-	    <div id="5" class="square">4</div>
-	    <div id="black-finish" class="square" style="background: black;">5</div>
-	    <div id="black-finish" class="square" style="background: black;">6</div>
-	    <div id="20" class="square">7</div>
-	    <div id="19" class="square">8</div>
-	    <div id="9" class="square">9</div>
-	    <div id="10" class="square">10</div>
-	    <div id="11" class="square">11</div>
-	    <div id="12" class="square">12</div>
-	    <div id="13" class="square">13</div>
-	    <div id="14" class="square">14</div>
-	    <div id="15" class="square">15</div>
-	    <div id="16" class="square">16</div>
-	    <div id="4" class="square">17</div>
-	    <div id="3" class="square">18</div>
-	    <div id="2" class="square">19</div>
-	    <div id="1" class="square">20</div>
-	    <div id="white-finish" class="square" style="background: red; color: red;">21</div>
-	    <div id="white-finish" class="square" style="background: red; color: red;">22</div>
-	    <div id="18" class="square">23</div>
-	    <div id="17" class="square">24</div>
+		<div id="8" class="square"><p></p><br><br><p class="current_piece"></p></div>
+		<div id="7" class="square"><p></p><br><br><p class="current_piece"></p></div>
+		<div id="6" class="square"><p></p><br><br><p class="current_piece"></p></div>
+		<div id="5" class="square"><p></p><br><br><p class="current_piece"></p></div>
+		<div id="black-finish" class="square"></div>
+		<div id="black-finish" class="square"></div>
+		<div id="20" class="square"><p></p><br><br><p class="current_piece"></p></div>
+		<div id="19" class="square"><p></p><br><br><p class="current_piece"></p></div>
+		<div id="9" class="square"><p></p><br><br><p class="current_piece"></p></div>
+		<div id="10" class="square"><p></p><br><br><p class="current_piece"></p></div>
+		<div id="11" class="square"><p></p><br><br><p class="current_piece"></p></div>
+		<div id="12" class="square"><p></p><br><br><p class="current_piece"></p></div>
+		<div id="13" class="square"><p></p><br><br><p class="current_piece"></p></div>
+		<div id="14" class="square"><p></p><br><br><p class="current_piece"></p></div>
+		<div id="15" class="square"><p></p><br><br><p class="current_piece"></p></div>
+		<div id="16" class="square"><p></p><br><br><p class="current_piece"></p></div>
+		<div id="4" class="square"><p></p><br><br><p class="current_piece"></p></div>
+		<div id="3" class="square"><p></p><br><br><p class="current_piece"></p></div>
+		<div id="2" class="square"><p></p><br><br><p class="current_piece"></p></div>
+		<div id="1" class="square"><p></p><br><br><p class="current_piece"></p></div>
+		<div id="white-finish" class="square"></div>
+		<div id="white-finish" class="square"></div>
+		<div id="18" class="square"><p></p><br><br><p class="current_piece"></p></div>
+		<div id="17" class="square"><p></p><br><br><p class="current_piece"></p></div>
 	</div>
+	<p id="available-white"></p>
+	<p id="available-black"></p>
+
+	<p id="current-turn"></p>
+	<p id="roll"></p>
+
+	<form action="javascript:handleMove()" autocomplete="off">
+		<br><br>
+		<input id="move" type="text">
+		<br><br>
+		<input id="btn" type="submit" value="Move">
+	</form>
 
 	<p>
 		Type in the index of the square that contains the piece you want to move. "0" (without quotes) signifies a 
 		piece you have off the board.
 	</p>
-
-	<form action="/games/1/actions/move/" autocomplete="off">
-		<br><br>
-		<input type="text" name="move">
-		<br><br>
-		<input id="btn" type="submit" value="Move">
-	</form>
 
 </body>
 </html>

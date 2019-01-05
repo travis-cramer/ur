@@ -5,6 +5,7 @@
     "completed_black": 0,
     "current_turn": "WHITE",
     "roll": 2,
+    "message": null,
     "white_path": [
         "0",
         "1",
