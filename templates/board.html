@@ -105,6 +105,12 @@
 			if (myJSON["message"]) {
 				document.getElementById("message").innerHTML = myJSON["message"];
 			}
+			if (myJSON["completed_black"] == 7) {
+				document.getElementById("message").innerHTML = "Game over. BLACK wins!!";
+			}
+			if (myJSON["completed_white"] == 7) {
+				document.getElementById("message").innerHTML = "Game over. WHITE wins!!";
+			}
 		}
 
 		function moveAndUpdateBoard(move) {
