@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<title>The Royal Game of Ur</title>
+
+	<style type="text/css">
+		body {
+			font-family: sans-serif;
+			font-size: 20px;
+		}
+
+		div {
+			width: 800px;
+			height: 300px;
+		}
+
+		#black-finish {
+			background: black;
+			color: white;
+		}
+
+		#white-finish {
+			background: red;
+			color: white;
+		}
+
+		div div {
+			width: 100px;
+			height: 100px;
+			outline: 1px solid;
+			float: left;
+		}
+	</style>
+
+	<script type="text/javascript">
+
+		window.onload = labelAndUpdateBoard;
+
+		function labelAndUpdateBoard() {
+			labelBoard();
+			getAndUpdateBoard();
+		}
+
+		function labelBoard() {
+			// label each space with its appropriate index
+			var i;
+			for (i = 1; i < 21; i++) { 
+				var myDiv = document.getElementById(i.toString());
+				myDiv.setAttribute("onclick", "moveAndUpdateBoard(" + myDiv.id + ")")
+			}
+		}
+
+		function getAndUpdateBoard() {
+			// request the backend for the current game state
+			var gameId = document.getElementById("game-id").innerHTML;
+			var xmlhttp = new XMLHttpRequest();
+			var url = "/games/" + gameId;
+
+			xmlhttp.onreadystatechange = function() {
+				if (this.status == 200) {
+					var myJSON = JSON.parse(this.responseText);
+					updateBoard(myJSON);
+				}
+			};
+
+			// update once initially and then continuously thereafter
+			xmlhttp.open("GET", url, true);
+			xmlhttp.send();
+			setInterval( function() {
+				xmlhttp.open("GET", url, true);
+				xmlhttp.send();
+				// continuously poll backend for updates every X ms
+			}, 500)
+			
+			
+		}
+
+		function updateBoard(myJSON) {
+			for (var i = 1; i < 21; i++) { 
+				var myDiv = document.getElementById(i.toString());
+				if (myJSON[i.toString()]["current_piece"] == "WHITE") {
+					myDiv.style.background = "lightgray";
+					myDiv.style.color = "black";
+				}
+				if (myJSON[i.toString()]["current_piece"] == "BLACK") {
+					myDiv.style.background = "gray";
+					myDiv.style.color = "white";  // so that we can see the text
+				}
+				if (myJSON[i.toString()]["current_piece"] == null) {
+					myDiv.style.background = "white";
+					myDiv.style.color = "black";
+				}
+				if (myJSON[i.toString()]["is_rosette"]) {
+					myDiv.innerHTML = "* * * *";
+				}
+			}
+			// populate misc. info
+			document.getElementById("available-white").innerHTML = "Available white pieces: " + myJSON["available_white"];
+			document.getElementById("available-black").innerHTML = "Available black pieces: " + myJSON["available_black"];
+			document.getElementById("white-finish").innerHTML = myJSON["completed_white"];
+			document.getElementById("black-finish").innerHTML = myJSON["completed_black"];
+			document.getElementById("current-turn").innerHTML = myJSON["current_turn"] + "'s Turn";
+			document.getElementById("roll").innerHTML = "Roll: " + myJSON["roll"];
+			if (myJSON["message"]) {
+				document.getElementById("message").innerHTML = myJSON["message"];
+			}
+			if (myJSON["completed_black"] == 7) {
+				document.getElementById("message").innerHTML = "Game over. BLACK wins!!";
+			}
+			if (myJSON["completed_white"] == 7) {
+				document.getElementById("message").innerHTML = "Game over. WHITE wins!!";
+			}
+		}
+
+		function moveAndUpdateBoard(move) {
+			// request the backend for the current game state
+			var gameId = document.getElementById("game-id").innerHTML;
+			var xmlhttp = new XMLHttpRequest();
+			var url = "/games/" + gameId + "/actions/move/?move=" + move;
+
+			xmlhttp.onreadystatechange = function() {
+				if (this.status == 200) {
+					var myJSON = JSON.parse(this.responseText);
+					updateBoard(myJSON);
+				}
+			};
+			xmlhttp.open("GET", url, true);
+			xmlhttp.send();
+		}
+
+		function newPiece() {
+			moveAndUpdateBoard("0")
+		}
+
+		function resetGame() {
+			// request the backend for the current game state
+			var gameId = document.getElementById("game-id").innerHTML;
+			var xmlhttp = new XMLHttpRequest();
+			var url = "/games/" + gameId + "/actions/reset/";
+
+			xmlhttp.onreadystatechange = function() {
+				if (this.status == 200) {
+					var myJSON = JSON.parse(this.responseText);
+					updateBoard(myJSON);
+				}
+			};
+			xmlhttp.open("GET", url, true);
+			xmlhttp.send();
+		}
+
+	</script>
+
+</head>
+
+<body>
+	<div id="game-id" style="height: 0px; visibility: hidden;">{{game_id}}</div> <!-- .js will grab this value -->
+
+	<form action="javascript:resetGame()">
+		<input type="submit" value="Reset Game">
+	</form>
+
+	<p id="current-turn"></p>
+	<p id="roll"></p>
+
+	<p id="message"></p>
+
+	<div id="board">
+		<div id="8" class="square"></div>
+		<div id="7" class="square"></div>
+		<div id="6" class="square"></div>
+		<div id="5" class="square"></div>
+		<div id="black-finish" class="square"></div>
+		<div id="black-finish" class="square"></div>
+		<div id="20" class="square"></div>
+		<div id="19" class="square"></div>
+		<div id="9" class="square"></div>
+		<div id="10" class="square"></div>
+		<div id="11" class="square"></div>
+		<div id="12" class="square"></div>
+		<div id="13" class="square"></div>
+		<div id="14" class="square"></div>
+		<div id="15" class="square"></div>
+		<div id="16" class="square"></div>
+		<div id="4" class="square"></div>
+		<div id="3" class="square"></div>
+		<div id="2" class="square"></div>
+		<div id="1" class="square"></div>
+		<div id="white-finish" class="square"></div>
+		<div id="white-finish" class="square"></div>
+		<div id="18" class="square"></div>
+		<div id="17" class="square"></div>
+	</div>
+	<br>
+	<input type="button" value="New Piece" onClick="newPiece()" />
+
+	<p id="available-white"></p>
+	<p id="available-black"></p>
+
+</body>
+</html>
