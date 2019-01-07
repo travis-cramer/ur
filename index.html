@@ -55,7 +55,7 @@
 			// request the backend for the current game state
 			var gameId = document.getElementById("game-id").innerHTML;
 			var xmlhttp = new XMLHttpRequest();
-			var url = "/games/" + gameId;
+			var url = "http://35.235.77.173:5000/games/" + gameId;
 
 			xmlhttp.onreadystatechange = function() {
 				if (this.status == 200) {
@@ -117,7 +117,7 @@
 			// request the backend for the current game state
 			var gameId = document.getElementById("game-id").innerHTML;
 			var xmlhttp = new XMLHttpRequest();
-			var url = "/games/" + gameId + "/actions/move/?move=" + move;
+			var url = "http://35.235.77.173:5000/games/" + gameId + "/actions/move/?move=" + move;
 
 			xmlhttp.onreadystatechange = function() {
 				if (this.status == 200) {
@@ -137,7 +137,7 @@
 			// request the backend for the current game state
 			var gameId = document.getElementById("game-id").innerHTML;
 			var xmlhttp = new XMLHttpRequest();
-			var url = "/games/" + gameId + "/actions/reset/";
+			var url = "http://35.235.77.173:5000/games/" + gameId + "/actions/reset/";
 
 			xmlhttp.onreadystatechange = function() {
 				if (this.status == 200) {
