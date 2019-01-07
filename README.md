@@ -48,4 +48,6 @@ Board Indexing
 --------------
 Below is a picture representing the index encoding of each square that we have chosen to use. The bottom of the board is white's side and the top is black's. There are also indexes "0" and "21" (not shown here) which represent the two offboard positions, with "0" being where pieces begin and "21" being where pieces finish.
 
+Hello.
+
 ![alt text](/images/ur-board-indexes.gif?raw=true)
