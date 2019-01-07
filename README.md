@@ -19,6 +19,8 @@ cd ur/
 4. Then, create a virtualenv called "env" using python 3 within your "ur" or "20squares" directory. On Unix/Linux:
 ```
 virtualenv -p python3 env
+OR
+python3 -m virtualenv env
 ```
 5. Activate it. On Unix/Linux:
 ```
