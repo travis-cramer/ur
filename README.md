@@ -22,7 +22,7 @@ virtualenv -p python3 env
 ```
 5. Activate it. On Unix/Linux:
 ```
-. env/bin/activate
+source env/bin/activate
 ```
 6. If you don't have it, install git (https://git-scm.com/book/en/v2/Getting-Started-Installing-Git).
 7. Then, clone this github repo within your "ur" or "20squares" directory:
