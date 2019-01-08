@@ -25,7 +25,7 @@ function getAndUpdateBoard() {
 	var url = "/games/" + gameId;
 
 	xmlhttp.onreadystatechange = function() {
-		if (this.status == 200) {
+		if (this.status === 200 && this.readyState === XMLHttpRequest.DONE) {
 			var myJSON = JSON.parse(this.responseText);
 			updateBoard(myJSON);
 		}
@@ -86,7 +86,7 @@ function moveAndUpdateBoard(move) {
 	var url = "/games/" + gameId + "/actions/move/?move=" + move;
 
 	xmlhttp.onreadystatechange = function() {
-		if (this.status == 200) {
+		if (this.status === 200 && this.readyState === XMLHttpRequest.DONE) {
 			var myJSON = JSON.parse(this.responseText);
 			updateBoard(myJSON);
 		}
@@ -105,7 +105,7 @@ function resetGame() {
 	var url = "/games/" + gameId + "/actions/reset/";
 
 	xmlhttp.onreadystatechange = function() {
-		if (this.status == 200) {
+		if (this.status === 200 && this.readyState === XMLHttpRequest.DONE) {
 			var myJSON = JSON.parse(this.responseText);
 			updateBoard(myJSON);
 		}

@@ -16,7 +16,7 @@ class Ur(object):
 
 	def new_game(self, game_id=None):
 		"""Resets the board to the initial state, the beginning of a new game"""
-		with open('new_game.json') as board_init:
+		with open('games/new_game.json') as board_init:
 			board_data = json.load(board_init)
 		self.board = board_data
 		self.roll()
