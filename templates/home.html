@@ -2,12 +2,7 @@
 <html>
 <head>
 	<title>Ur Games List</title>
-	<style type="text/css">
-		body {
-			font-family: sans-serif;
-			font-size: 18px;
-		}
-	</style>
+	<link rel="stylesheet" type="text/css" href="/static/style.css">
 </head>
 <body>
 	<form action="/new_game/">
@@ -15,7 +10,7 @@
 	</form>
 
 	{% for game_id in game_ids %}
-		<p><a href="/board?game_id={{game_id}}">game {{game_id}}</a></p>
+		<p><a href="/board/?game_id={{game_id}}">game {{game_id}}</a></p>
 	{% endfor %}
 
 </body>

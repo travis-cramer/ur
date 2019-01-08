@@ -3,11 +3,11 @@ from flask import Flask, request, render_template, jsonify, redirect, url_for
 from play import Ur
 
 
-app = Flask(__name__, static_folder='')
+app = Flask(__name__)
 
 
 @app.route("/")
-def games():
+def index():
 	game = Ur()
 	all_game_ids = game.get_all_game_ids()
 	all_game_ids.sort()
