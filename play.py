@@ -51,7 +51,7 @@ class Ur(object):
 		self.save_game(game_id=game_id)
 
 	def get_all_game_ids(self):
-		all_games = glob.glob("games/*.json")  # get all games in games/ directory
+		all_games = glob.glob("games/game_*.json")  # get all games in games/ directory
 		game_ids = []
 		for game in all_games:
 			game_id = game.split('/')[-1].split('.')[0].split('_')[-1]

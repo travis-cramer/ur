@@ -11,13 +11,13 @@ def index():
 	game = Ur()
 	all_game_ids = game.get_all_game_ids()
 	all_game_ids.sort()
-	return render_template('home.html', game_ids=all_game_ids)
+	return render_template('index.html', game_ids=all_game_ids)
 
 @app.route("/new_game/")
 def new_game():
 	game = Ur()
 	game.new_game(game.get_new_game_id())
-	return redirect(url_for('games'))
+	return redirect(url_for('index'))
 
 @app.route("/board/")
 def board():
