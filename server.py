@@ -65,5 +65,5 @@ def github_push():
 
 if __name__ == "__main__":
 	from time import sleep
-	sleep(2)
+	sleep(10)
 	app.run(host="0.0.0.0", debug=False)
