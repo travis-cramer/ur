@@ -62,7 +62,7 @@ def start_server():
 
 @app.route("/github/push", methods=["POST"])
 def github_push():
-    if request.form.get("ref").split("/")[-1] == MASTER_BRANCH_NAME:
+    if request.form.get("payload").get("ref").split("/")[-1] == MASTER_BRANCH_NAME:
         update_server()
         shutdown_server()
         start_server()
