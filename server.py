@@ -64,15 +64,13 @@ def start_server():
 @app.route("/github/push", methods=["POST"])
 def github_push():
     payload = json.loads(request.form.get("payload"))
-    print(payload.get("ref").split("/")[-1])
-    print(MASTER_BRANCH_NAME)
-    if payload.get("ref").split("/")[-1] == MASTER_BRANCH_NAME:
-        shutdown_server()
-        update_server()
-        start_server()
+    print(payload.get("ref"))
+    shutdown_server()
+    update_server()
+    start_server()
     return "Shutting down and restarting server..."
 
 
 if __name__ == "__main__":
-    sleep(8)
+    sleep(1)
     app.run(host="0.0.0.0", debug=False)
