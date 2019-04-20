@@ -43,6 +43,27 @@ def reset(game_id):
 	game.reset_game(game_id)
 	return jsonify(game.board)
 
+def shutdown_server():
+        func = request.environ.get('werkzeug.server.shutdown')
+        if func is None:
+            raise RuntimeError('Not running with the Werkzeug Server')
+        func()
+
+def update_and_restart_server():
+    import subprocess
+    subprocess.Popen(["sudo", "git", "pull", "origin", "master"])
+    subprocess.Popen(["python", "server.py"])
+
+@app.route("/github/push", methods=["GET", "POST"])
+def github_push():
+        shutdown_server()
+        print("Shutting down server...")
+        update_and_restart_server()
+        print("Restarting server...")
+        return "Shutting down and restarting server..."
+
 
 if __name__ == "__main__":
+	from time import sleep
+	sleep(2)
 	app.run(host="0.0.0.0", debug=False)
