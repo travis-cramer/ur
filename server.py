@@ -75,4 +75,4 @@ def github_push():
 
 if __name__ == "__main__":
     sleep(8)
-    app.run(host="0.0.0.0", debug=True)
+    app.run(host="0.0.0.0", debug=False)
