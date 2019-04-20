@@ -56,7 +56,7 @@ def shutdown_server():
     func()
 
 def update_server():
-    subprocess.Popen(["sudo", "git", "pull", "origin", "master"])
+    subprocess.Popen(["git", "pull", "origin", "master"])
 
 def start_server():
     subprocess.Popen(["python", "server.py"])
@@ -67,12 +67,12 @@ def github_push():
     print(payload.get("ref").split("/")[-1])
     print(MASTER_BRANCH_NAME)
     if payload.get("ref").split("/")[-1] == MASTER_BRANCH_NAME:
-        update_server()
         shutdown_server()
+        update_server()
         start_server()
     return "Shutting down and restarting server..."
 
 
 if __name__ == "__main__":
-    sleep(3)
+    sleep(8)
     app.run(host="0.0.0.0", debug=True)
