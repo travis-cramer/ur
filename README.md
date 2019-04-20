@@ -1,7 +1,7 @@
 The Royal Game of Ur
 --------------------
 
-The Roayal Game of Ur is an ancient board game. This repo contains the server and client code for running an in-broswer version of it.
+The Roayal Game of Ur is an ancient board game! This repo contains the server and client code for running an in-broswer version of it.
 
 See the installation instructions below to run your own server of the game. Or, you can immediately demo the game hosted here: http://35.235.77.173:5000/
 
