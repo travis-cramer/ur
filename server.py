@@ -1,3 +1,4 @@
+import json
 import subprocess
 from time import sleep
 
@@ -62,7 +63,8 @@ def start_server():
 
 @app.route("/github/push", methods=["POST"])
 def github_push():
-    if request.form.get("payload").get("ref").split("/")[-1] == MASTER_BRANCH_NAME:
+    payload = json.loads(request.form.get("payload"))
+    if payload.get("ref").split("/")[-1] == MASTER_BRANCH_NAME:
         update_server()
         shutdown_server()
         start_server()
