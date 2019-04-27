@@ -1,6 +1,5 @@
 import glob
 import json
-import os
 import random
 
 
@@ -28,12 +27,10 @@ class Ur(object):
 	def save_game(self, game_id=None):
 		if game_id:
 			filename = 'games/game_{}.json'.format(game_id)
-			os.makedirs(os.path.dirname(filename), exist_ok=True)  # make required directories if not created yet
 			with open(filename, 'w') as board_file:
 				json.dump(self.board, board_file, indent=4)
 		else:
 			filename = 'games/game_1.json'
-			os.makedirs(os.path.dirname(filename), exist_ok=True)  # make required directories if not created yet
 			with open(filename, 'w') as board_file:
 				json.dump(self.board, board_file, indent=4)
 
