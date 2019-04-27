@@ -29,11 +29,11 @@ source env/bin/activate
 6. If you don't have it, install git (https://git-scm.com/book/en/v2/Getting-Started-Installing-Git).
 7. Then, clone this github repo within your "ur" or "20squares" directory:
 ```
-git clone https://github.com/pyracmon/20squares
+git clone https://github.com/travis-cramer/ur
 ```
 8. Move into the cloned repo:
 ```
-cd 20squares/
+cd ur/
 ```
 9. Install all requirements listed in "requirements.txt" (with your virtualenv activated):
 ```
